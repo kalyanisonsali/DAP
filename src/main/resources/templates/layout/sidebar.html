@@ -1,0 +1,29 @@
+<div th:fragment="sidebar">
+<aside class="bg-gray-900 text-white w-60 h-screen p-5 fixed">
+    <h2 class="text-xl font-bold mb-4">Menu</h2>
+    <nav>
+        <ul>
+            <li class="mb-2"><a href="#" class="block p-2 hover:bg-gray-700">My Profile</a></li>
+            <li class="mb-2"><a href="#" class="block p-2 hover:bg-gray-700">My Project</a></li>
+            <li class="mb-2"><a href="#" class="block p-2 hover:bg-gray-700">Dashboard (Insight)</a></li>
+            <li class="mb-2"><a href="#" class="block p-2 hover:bg-gray-700">Feedback</a></li>
+            <li class="mt-4"><a href="#" class="block p-2 bg-red-600 rounded">Logout</a></li>
+        </ul>
+    </nav>
+</aside>
+</div>
+<script>
+function toggleDropdown() {
+    document.getElementById("dropdownMenu").classList.toggle("hidden");
+}
+
+document.addEventListener("click", function (event) {
+    let dropdown = document.getElementById("dropdownMenu");
+    let profile = document.querySelector(".cursor-pointer");
+
+    if (!profile.contains(event.target)) {
+        dropdown.classList.add("hidden");
+    }
+});
+
+</script>

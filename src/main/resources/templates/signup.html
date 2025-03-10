@@ -97,13 +97,21 @@
         const response = await fetch(`/check-email?email=${email}`);
         const text = await response.text();
 
-        if (text === "exists") {
-            alert("This email is already registered. Please use a different one.");
-            return false;
-        } else {
-            alert("Email available! Proceeding with registration...");
-            document.forms[0].submit(); // Submit the form
+        try {
+            const response = await fetch(`/check-email?email=${encodeURIComponent(email)}`);
+            const text = await response.text();
+
+            if (text.trim() === "exists") {
+                alert("This email is already registered. Please use a different one.");
+            } else {
+                alert("Email available! Proceeding with registration...");
+                document.getElementById("registerForm").submit(); // Submit the form
+            }
+        } catch (error) {
+            console.error("Error checking email:", error);
+            alert("Error checking email. Please try again.");
         }
+    
    
     </script>
 </body>
