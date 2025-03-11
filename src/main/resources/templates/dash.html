@@ -19,26 +19,27 @@
         <!-- Header -->
         <header th:insert="~{layout/header :: header}"></header>
 
-        <!-- Main Content Wrapper -->
-        <div class="flex flex-1">
-            <!-- Sidebar -->
-            <aside class="w-64 bg-white shadow-lg flex flex-col" th:insert="~{layout/sidebar :: sidebar}"></aside>
+       <!-- Main Content Wrapper -->
+<div class="flex flex-1 min-h-screen">
+    <!-- Sidebar -->
+    <aside class="w-56 bg-white shadow-lg flex flex-col h-full" th:insert="~{layout/sidebar :: sidebar}"></aside>
 
-            <!-- Main Content -->
-            <main class="flex-1 p-10">
-                <h1 class="text-2xl font-bold mb-4">Welcome to Dashboard</h1>
-                <p>Your project insights and data visualization appear here.</p>
+    <!-- Main Content -->
+    <main class="flex-1 p-5 bg-gray-100">
+        <h1 class="text-2xl font-bold mb-4">Welcome to Dashboard</h1>
+        <p>Your project insights and data visualization appear here.</p>
 
-                <!-- Image Carousel -->
-                <div class="mt-5">
-                    <div class="relative w-full max-w-2xl mx-auto">
-                        <img id="carousel-image" class="rounded-lg shadow-lg" src="/images/image1.jpg" alt="Slide 1">
-                        <button onclick="prevImage()" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-l">❮</button>
-                        <button onclick="nextImage()" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-r">❯</button>
-                    </div>
-                </div>
-            </main>
+        <!-- Image Carousel -->
+        <div class="mt-5">
+            <div class="relative w-full max-w-2xl mx-auto">
+                <img id="carousel-image" class="rounded-lg shadow-lg" src="/images/image1.jpg" alt="Slide 1">
+                <button onclick="prevImage()" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-l">❮</button>
+                <button onclick="nextImage()" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-r">❯</button>
+            </div>
         </div>
+    </main>
+</div>
+
 
         <!-- Footer -->
         <footer th:insert="~{layout/footer :: footer}"></footer>

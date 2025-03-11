@@ -1,39 +1,28 @@
-<header class="bg-teal-600 text-white p-2 flex justify-between items-center shadow-md text-base">
+<header class="bg-teal-700 text-white p-1 flex justify-between items-center shadow-md text-sm">
     <!-- Left: Logo -->
-    <div class="ml-2">
-<img src="/images/in2in.jpeg" alt="Logo" class="w-20 h-20">
+    <div class="flex items-center">
+<img th:src="@{/images/in2in.jpeg}" alt="Logo" class="w-12 h-12">
     </div>
 
     <!-- Center: Subscription Button -->
-    <button class="bg-orange-500 text-white px-4 py-2 text-sm rounded-md flex items-center hover:bg-orange-600 transition duration-300">
-        Subscribe Basic Plan ($50) <span class="ml-1">➤</span>
+    <button class="bg-orange-500 text-white px-3 py-2 text-xs rounded-md flex items-center hover:bg-orange-600 transition duration-300">
+        Subscribe ($50) <span class="ml-1">➤</span>
     </button>
 
     <!-- Right: User Profile Dropdown -->
-    <div class="relative flex items-center space-x-2 mr-4 cursor-pointer">
+    <div class="relative flex items-center space-x-1 mr-2 cursor-pointer">
         <div class="text-white">
-            <p class="text-xs leading-none font-medium">WELCOME</p>
-            <span th:text="${fname}"></span> <!-- Dynamic username -->
+            <p class="text-xs font-medium">WELCOME</p>
+            <span th:text="${fname}"></span>
         </div>
 
         <!-- Dropdown Button -->
-        <button id="dropdownButton" class="ml-1 focus:outline-none">
-            ▼
-        </button>
+        <button id="dropdownButton" class="ml-1 focus:outline-none">▼</button>
 
         <!-- Dropdown Menu -->
-        <div id="dropdownMenu" 
-            class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden">
-            
-            <!-- Profile Option -->
-            <a href="/profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                My Profile
-            </a>
-
-            <!-- Logout Option -->
-            <a href="/logout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                Logout
-            </a>
+        <div id="dropdownMenu" class="absolute right-0 mt-1 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden">
+            <a href="/profile" class="block px-3 py-1 text-gray-700 hover:bg-gray-100">My Profile</a>
+            <a href="/logout" class="block px-3 py-1 text-gray-700 hover:bg-gray-100">Logout</a>
         </div>
     </div>
 </header>
@@ -45,11 +34,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const dropdownMenu = document.getElementById("dropdownMenu");
 
     dropdownButton.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent immediate close
-        dropdownMenu.classList.toggle("hidden"); // Toggle visibility
+        event.stopPropagation();
+        dropdownMenu.classList.toggle("hidden");
     });
 
-    // Close dropdown when clicking outside
     document.addEventListener("click", function (event) {
         if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
             dropdownMenu.classList.add("hidden");
