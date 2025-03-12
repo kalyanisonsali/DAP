@@ -1,6 +1,6 @@
 package com.example.demo.Controller;
 
-import java.security.Principal;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -73,6 +73,8 @@ public class UserController
 	        
 	        // Store first name in session for display
 	        session.setAttribute("fname", user.getFname());
+	        session.setAttribute("lname", user.getLname());
+	        session.setAttribute("email", user.getEmail());
 
 	        return "redirect:/dash";  // Redirect to dashboard
 	    } else {
@@ -91,6 +93,11 @@ public class UserController
 
 	    if (user != null) {
 	        model.addAttribute("fname", user.getFname()); // Set first name in model
+	        model.addAttribute("lname", user.getLname());
+	        model.addAttribute("email", user.getEmail());
+	        Date now = new Date();
+	        model.addAttribute("lastLogin", now);
+	        
 	    } else {
 	        return "redirect:/"; // Redirect to login if session is null
 	    }

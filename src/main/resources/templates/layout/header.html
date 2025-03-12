@@ -16,14 +16,17 @@
             <span th:text="${fname}"></span>
         </div>
 
-        <!-- Dropdown Button -->
-        <button id="dropdownButton" class="ml-1 focus:outline-none">▼</button>
+       
+<!-- Dropdown Button -->
+<button id="dropdownButton" aria-haspopup="true" aria-expanded="false" class="ml-1 focus:outline-none">▼</button>
 
-        <!-- Dropdown Menu -->
-        <div id="dropdownMenu" class="absolute right-0 mt-1 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden">
-            <a href="/profile" class="block px-3 py-1 text-gray-700 hover:bg-gray-100">My Profile</a>
-            <a href="/logout" class="block px-3 py-1 text-gray-700 hover:bg-gray-100">Logout</a>
-        </div>
+<!-- Dropdown Menu -->
+<div id="dropdownMenu" class="absolute left-0 top-full mt-1 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden">
+    <a href="/profile" class="block px-3 py-1 text-gray-700 hover:bg-gray-100">My Profile</a>
+    <a href="/logout" class="block px-3 py-1 text-gray-700 hover:bg-gray-100">Logout</a>
+</div>
+
+
     </div>
 </header>
 
