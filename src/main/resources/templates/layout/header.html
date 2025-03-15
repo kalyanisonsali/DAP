@@ -1,6 +1,7 @@
-<header class="bg-teal-600 text-white p-2 flex justify-between items-center shadow-md text-base">
+
+<header class="bg-teal-600 text-white p-2 flex justify-between items-center shadow-md text-base fixed top-0 left-0 w-full z-50">
     <div class="ml-2">
-        <img th:src="@{/images/in2in_logo.png}" alt="Logo" class="w-20 h-18 ml-8" style="filter: invert(1) brightness(1000%);">
+        <img th:src="@{/images/in2in_logo.png}" alt="Logo" class="w-20 h-18 ml-16" style="filter: invert(1) brightness(1000%);">
     </div>
     <button
         class="bg-orange-500 text-white px-4 py-2 text-sm rounded-md flex items-center hover:bg-orange-600 transition duration-300">
@@ -13,7 +14,7 @@
 
         <div class="text-white">
             <p class="text-xs leading-none font-medium">WELCOME</p>
-            <span th:text="${name}" class="font-bold"></span>
+            <span th:text="${fname}" class="font-bold"></span>
         </div>
         <button id="dropdownButton" class="ml-1 focus:outline-none">
             ▼

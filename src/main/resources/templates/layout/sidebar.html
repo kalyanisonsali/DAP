@@ -1,32 +1,106 @@
-<div th:fragment="sidebar">
-<aside class="bg-gray-900 text-white w-60 h-screen p-5 fixed">
-    <nav>
-        <ul>
-            <li class="mb-2"><a href="#" class="block p-2 hover:bg-gray-700">My Profile</a></li>
-            <li class="mb-2"><a href="#" class="block p-2 hover:bg-gray-700">My Project</a></li>
-            <li class="mb-2"><a href="#" class="block p-2 hover:bg-gray-700">Dashboard (Insight)</a></li>
-            <li class="mb-2"><a href="#" class="block p-2 hover:bg-gray-700">Feedback</a></li>
-            <li class="mt-4"><a href="/logout"
-                class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-300">
-                Logout
-            </a>
-            </li>
-        </ul>
-    </nav>
-</aside>
-</div>
+<!DOCTYPE html>
+<html lang="en">
 
-<script>
-function toggleDropdown() {
-    document.getElementById("dropdownMenu").classList.toggle("hidden");
-}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Navigation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-document.addEventListener("click", function (event) {
-    let dropdown = document.getElementById("dropdownMenu");
-    let profile = document.querySelector(".cursor-pointer");
+<body>
+    <div th:fragment="sidebar">
+        <aside class="bg-black text-gray-300 w-60 h-screen p-5 fixed top-14 left-0">
+            <nav>
+                <ul>
+                    <!-- My Profile -->
+                    <li class="mb-2">
+                        <a th:href="@{/userDash}"
+                            class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
+                            th:classappend="${currentPage == 'userDash' or currentPage == 'dash' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
+                            <i class="fa-solid fa-user text-teal-500"></i> My Profile
+                        </a>
+                    </li>
+                    
 
-    if (!profile.contains(event.target)) {
-        dropdown.classList.add("hidden");
-    }
-});
-</script>
+                    <!-- My Project (Dropdown) -->
+                    <li class="mb-2">
+                        <div class="flex items-center justify-between p-2 rounded cursor-pointer w-full"
+                             th:classappend="${currentPage == 'newProject' or currentPage == 'viewProjects' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}"
+                             onclick="toggleDropdown('projectDropdown', 'dropdownIcon')">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-folder text-gray-400"></i>
+                                <span>My Project</span>
+                            </div>
+                            <i id="dropdownIcon" class="fa-solid fa-chevron-down text-gray-400"></i>
+                        </div>
+                        <ul id="projectDropdown" class="ml-6 mt-2 hidden">
+                            <li class="mb-2">
+                                <a th:href="@{/create-project}"
+                                    class="block p-2 bg-gray-800 rounded cursor-pointer"
+                                    th:classappend="${currentPage == 'newProject' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
+                                    Create New Project
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/view-projects}"
+                                    class="block p-2 bg-gray-800 rounded cursor-pointer"
+                                    th:classappend="${currentPage == 'viewProjects' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
+                                    View Existing Projects
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Dashboard (Insight) -->
+                    <li class="mb-2">
+                        <a th:href="@{/dashboard}"
+                            class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
+                            th:classappend="${currentPage == 'dashboard' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
+                            <i class="fa-solid fa-chart-line text-gray-400"></i> Dashboard (Insight)
+                        </a>
+                    </li>
+
+                    <!-- Feedback -->
+                    <li class="mb-2">
+                        <a th:href="@{/feedback}"
+                            class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
+                            th:classappend="${currentPage == 'feedback' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
+                            <i class="fa-solid fa-comment text-gray-400"></i> Feedback
+                        </a>
+                    </li>
+
+                    <!-- Logout -->
+                    <li class="mb-2">
+                        <a th:href="@{/logout}"
+                            class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
+                            th:classappend="${currentPage == 'logout' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
+                            <i class="fa-solid fa-right-from-bracket text-gray-400"></i> Logout
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+    </div>
+
+    <script>
+        function toggleDropdown(dropdownId, iconId) {
+            let dropdown = document.getElementById(dropdownId);
+            let icon = document.getElementById(iconId);
+
+            dropdown.classList.toggle("hidden");
+            icon.classList.toggle("rotate-180");
+        }
+    </script>
+
+    <style>
+        .rotate-180 {
+            transform: rotate(180deg);
+            transition: transform 0.3s ease;
+        }
+    </style>
+
+</body>
+
+</html>
