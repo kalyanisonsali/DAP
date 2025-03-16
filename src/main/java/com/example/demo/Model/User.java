@@ -1,10 +1,18 @@
+
 package com.example.demo.Model;
 
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -12,11 +20,42 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@NotBlank(message = "First name is required")
 	private String fname;
+
+	@NotBlank(message = "Last name is required")
 	private String lname;
+
+	@NotBlank(message = "Email is required")
+	@Email(message = "Invalid email format")
 	private String email;
+
+	@NotBlank(message = "Password is required")
+	@Size(min = 8, message = "Password must be at least 8 characters long")
 	private String password;
 
+	private String subscription;
+    private int projectSubscribed;
+    private int created;
+    private int active;
+    private int deleted;
+
+    @Column(name = "last_login", columnDefinition = "TIMESTAMP")
+    private LocalDateTime lastLogin;
+    
+    @Lob // Store as Large Object
+    @Column(columnDefinition = "LONGBLOB") // For MySQL (or use BYTEA for PostgreSQL)
+    private byte[] profileImage;
+
+    // Getters and Setters
+    public byte[] getProfileImage() {
+        return profileImage;
+    }
+
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
+    }
 	public Long getId() {
 		return id;
 	}
@@ -46,7 +85,7 @@ public class User {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.email = email.trim().toLowerCase();
 	}
 
 	public String getPassword() {
@@ -56,4 +95,56 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public String getSubscription() {
+		return subscription;
+	}
+
+	public void setSubscription(String subscription) {
+		this.subscription = subscription;
+	}
+
+	public int getProjectSubscribed() {
+		return projectSubscribed;
+	}
+
+	public void setProjectSubscribed(int projectSubscribed) {
+		this.projectSubscribed = projectSubscribed;
+	}
+
+	public int getCreated() {
+		return created;
+	}
+
+	public void setCreated(int created) {
+		this.created = created;
+	}
+
+	public int getActive() {
+		return active;
+	}
+
+	public void setActive(int active) {
+		this.active = active;
+	}
+
+	public int getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(int deleted) {
+		this.deleted = deleted;
+	}
+
+	public LocalDateTime getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(LocalDateTime lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	
+
+	
 }

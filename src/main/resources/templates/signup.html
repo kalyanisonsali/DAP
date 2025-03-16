@@ -1,13 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Sign up</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        .custom-swal-toast {
+            background: rgba(0, 128, 0, 0.85) !important;
+            color: white !important;
+            border-left: 5px solid #28a745 !important;
+            border-radius: 6px !important;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2) !important;
+            padding: 8px 14px !important;
+            font-size: 14px !important;
+            font-weight: normal !important;
+            min-width: 250px !important;
+            max-width: 300px !important;
+        }
+
+        .custom-swal-toast .swal2-title {
+            font-size: 16px !important;
+            font-weight: bold !important;
+        }
+
+        .custom-swal-toast .swal2-content {
+            font-size: 12px !important;
+        }
+
+        .custom-swal-toast .swal2-icon {
+            width: 30px !important;
+            height: 30px !important;
+            font-size: 16px !important;
+        }
+    </style>
 </head>
 
 <body class="flex items-center justify-center h-screen bg-gray-200">
@@ -44,9 +75,6 @@
                     <i class="fa fa-lock text-gray-500"></i>
                     <input type="password" id="password" placeholder="Enter your password"
                         class="w-full bg-transparent outline-none ml-2 text-sm" name="password" required>
-                    <button type="button" onclick="togglePassword()" class="text-gray-500 focus:outline-none text-sm">
-                        👁️
-                    </button>
                 </div>
             </div>
             <button type="submit" class="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 text-sm">SIGN
@@ -58,41 +86,85 @@
     </div>
 
     <script>
-        function togglePassword() {
-            const passwordField = document.getElementById('password');
-            passwordField.type = passwordField.type === 'password' ? 'text' : 'password';
-        }
-
         async function validateForm(event) {
             event.preventDefault();
 
-            const email = document.getElementById('email').value;
+            const form = document.getElementById("registerForm");
+            const formData = new FormData(form);
+
+            const fname = document.getElementById('fname').value.trim();
+            const lname = document.getElementById('lname').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
             const password = document.getElementById('password').value;
-            const emailPattern = /^[^@]+@[^@]+\.[^@]+$/;
+
+            const namePattern = /^[A-Za-z]{2,}$/;
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
 
+            if (!namePattern.test(fname)) {
+                alert("First name must contain only letters and be at least 2 characters long.");
+                return false;
+            }
+            if (!namePattern.test(lname)) {
+                alert("Last name must contain only letters and be at least 2 characters long.");
+                return false;
+            }
             if (!emailPattern.test(email)) {
                 alert("Invalid email format!");
                 return false;
             }
             if (!passwordPattern.test(password)) {
-                alert("Password must meet complexity requirements.");
+                alert("Password must be at least 6 characters long, with at least one uppercase, one lowercase, one number, and one special character.");
                 return false;
             }
 
             try {
-                const response = await fetch(`/check-email?email=${encodeURIComponent(email)}`);
-                const text = await response.text();
 
-                if (text.trim() === "exists") {
+                const emailCheckResponse = await fetch(`/check-email?email=${encodeURIComponent(email)}`);
+                const emailCheckText = await emailCheckResponse.text();
+
+                if (emailCheckText.trim() === "exists") {
                     alert("This email is already registered.");
                     return false;
+                }
+
+
+                const response = await fetch(form.action, {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (response.ok) {
+                    Swal.fire({
+                        title: "Signup successful!",
+                        text: "Redirecting to login...",
+                        icon: "success",
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 1000,
+                        timerProgressBar: true,
+                        customClass: { popup: "custom-swal-toast" }
+                    });
+
+                    setTimeout(() => {
+                        window.location.href = "/";
+                    }, 1000);
                 } else {
-                    document.getElementById("registerForm").submit();
+                    Swal.fire({
+                        title: "Signup failed.",
+                        text: "Please try again.",
+                        icon: "error",
+                        confirmButtonColor: "#d33"
+                    });
                 }
             } catch (error) {
-                alert("Error checking email.");
-                return false;
+                Swal.fire({
+                    title: "Error!",
+                    text: "Something went wrong. Please try again.",
+                    icon: "error",
+                    confirmButtonColor: "#d33"
+                });
             }
         }
     </script>

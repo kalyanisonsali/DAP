@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>My Profile</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { theme: { extend: {} } };
@@ -11,213 +11,138 @@
 </head>
 <body class="bg-gray-100">
     <div class="flex flex-col min-h-screen">
-        <header th:insert="~{layout/header :: header}"></header>
+        <!-- Header -->
+        <header th:insert="~{layout/header :: header}" class="shadow-md"></header>
 
-        <!-- Main Content Wrapper -->
-<<<<<<< HEAD
-        <div class="flex flex-1 min-h-screen">
+        <!-- Main Container -->
+        <div class="flex flex-1 min-h-screen mt-4">
             <!-- Sidebar -->
             <aside class="w-56 bg-white shadow-lg flex flex-col min-h-screen" th:insert="~{layout/sidebar :: sidebar}"></aside>
 
             <!-- Main Content -->
             <main class="flex-1 p-5 bg-gray-100">
-                <h1 class="text-2xl font-bold mb-4">My Profile</h1>
+                <h1 class="text-2xl font-bold mb-4 text-teal-700">MY PROFILE</h1>
+                <form class="mt-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Left Side -->
+                        <div>
+                            <!-- Profile Photo Upload -->
+                            <div class="mb-4 flex items-center">
+                                <label class="w-1/3 font-semibold">Profile Photo</label>
+                                <div class="w-20 h-20 border border-gray-300 rounded-md overflow-hidden flex items-center justify-center cursor-pointer bg-gray-200"
+                                     onclick="document.getElementById('profilePhoto').click()">
+                                    <img id="profilePreview" class="w-full h-full object-cover"
+                                         th:src="@{/profileImage/{userId}(userId=${user.id})}" 
+                                         onerror="this.src='/images/default-profile.png'">
+                                    <span id="uploadText" class="text-gray-500 text-sm hidden">Upload Photo</span>
+                                </div>
+                                <input type="file" id="profilePhoto" name="image" class="hidden" accept="image/*" onchange="previewProfilePhoto(event)">
+                            </div>
 
-                
+                            
 
-                <!-- Profile Form -->
-                <!-- Profile Form -->
-<form class="mt-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Left Side -->
-        <div>
-            <!-- Profile Photo -->
-<div class="mb-4">
-    <label class="font-semibold block mb-2">Profile Photo</label>
-    <div class="w-20 h-20 border border-gray-300 rounded-md overflow-hidden flex items-center justify-center cursor-pointer bg-gray-200" 
-         onclick="document.getElementById('profilePhoto').click()">
-        <img id="profilePreview" class="w-full h-full object-cover hidden">
-        <span id="uploadText" class="text-gray-500 text-sm">Upload Photo</span>
-    </div>
+                            <div class="mb-4 flex items-center">
+                                <label class="w-1/3 font-semibold">First Name</label>
+                                <input type="text" class="w-2/3 p-2 border rounded" th:value="${fname}">
+                            </div>
 
-    <!-- Hidden File Input -->
-    <input type="file" id="profilePhoto" class="hidden" accept="image/*" onchange="previewProfilePhoto(event)">
-</div>
+                            <div class="mb-4 flex items-center">
+                                <label class="w-1/3 font-semibold">Last Name</label>
+                                <input type="text" class="w-2/3 p-2 border rounded" th:value="${lname}">
+                            </div>
 
-            <div class="mb-4 flex flex-wrap items-center">
-                <label class="w-1/3 font-semibold">First Name</label>
-                <input type="text" class="w-2/3 p-2 border rounded" th:value="${fname}">
-            </div>
+                            <div class="mb-4 flex items-center">
+                                <label class="w-1/3 font-semibold">Email ID</label>
+                                <input type="email" class="w-2/3 p-2 border rounded bg-gray-100" th:value="${email}" readonly>
+                            </div>
 
-            <div class="mb-4 flex flex-wrap items-center">
-                <label class="w-1/3 font-semibold">Last Name</label>
-                <input type="text" class="w-2/3 p-2 border rounded" th:value="${lname}">
-            </div>
-=======
-        <div class="flex flex-1">
-            <!-- Sidebar -->
-            <aside class="w-64 bg-white shadow-lg flex flex-col" th:insert="~{layout/sidebar :: sidebar}"></aside>
+                            <div class="mb-4 flex items-center">
+                                <label class="w-1/3 font-semibold">Last Login</label>
+                                <input type="text" class="w-2/3 p-2 border rounded bg-gray-100" th:value="${lastLogin}" readonly>
+                            </div>
 
-            <!-- Main Content -->
-            <main class="flex-1 p-10">
-                <h1 class="text-2xl font-bold mb-4">Welcome to Dashboard</h1>
-                <p>Your project insights and data visualization appear here.</p>
+                            <div class="mb-4 flex items-center">
+                                <label class="w-1/3 font-semibold">Subscription</label>
+                                <input type="text" class="w-2/3 p-2 border rounded bg-gray-100" th:value="${subscription}" readonly>
+                            </div>
+                        </div>
 
-                <!-- Image Carousel -->
-                <div class="mt-5">
-                    <div class="relative w-full max-w-2xl mx-auto">
-                        <img id="carousel-image" class="rounded-lg shadow-lg" src="/images/image1.jpg" alt="Slide 1">
-                        <button onclick="prevImage()" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-l">❮</button>
-                        <button onclick="nextImage()" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-r">❯</button>
+                        <!-- Right Side -->
+                        <div>
+                            <div class="mb-4 flex items-center">
+                                <label class="w-1/3 font-semibold">Change Password</label>
+                                <input type="checkbox" id="changePassword" class="ml-2" onchange="togglePasswordField()">
+                            </div>
+
+                            <div id="passwordField" class="mb-4 flex items-center hidden">
+                                <label class="w-1/3 font-semibold">New Password</label>
+                                <input type="password" class="w-2/3 p-2 border rounded" placeholder="Enter New Password">
+                            </div>
+
+                            <div class="mb-4 flex items-center">
+                                <label class="w-1/3 font-semibold">No. of Projects</label>
+                                <input type="text" class="w-2/3 p-2 border rounded bg-gray-100" th:value="${projectSubscribed}" readonly>
+                            </div>
+
+                            <div class="mb-4">
+                                <p class="text-gray-700">
+                                    <strong>Created :</strong> <span th:text="${created}"></span>, 
+                                    <strong>Active :</strong> <span th:text="${active}"></span>, 
+                                    <strong>Deleted :</strong> <span th:text="${deleted}"></span>
+                                </p>
+                            </div>
+
+                            <button id="submitButton" class="mt-4 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 hidden">Submit</button>
+                        </div>
                     </div>
-                </div>
+
+                    <button class="mt-6 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700">Save</button>
+                </form>
             </main>
         </div>
 
-        <footer th:insert="~{layout/footer :: footer}"></footer>
->>>>>>> origin/main
-
-            <div class="mb-4 flex flex-wrap items-center">
-                <label class="w-1/3 font-semibold">Email ID</label>
-                <input type="email" class="w-2/3 p-2 border rounded " th:value="${email}" disabled>
-            </div>
-
-            <div class="mb-4 flex flex-wrap items-center">
-                <label class="w-1/3 font-semibold">Last Login</label>
-                <input type="text" class="w-2/3 p-2 border rounded" th:value="${#dates.format(lastLogin, 'yyyy-MM-dd HH:mm:ss')}" disabled>
-            </div>
-
-            <div class="mb-4 flex flex-wrap items-center">
-                <label class="w-1/3 font-semibold">Subscription</label>
-                <input type="text" class="w-2/3 p-2 border rounded " value="" disabled>
-            </div>
-
-            <button class="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700">
-                Save
-            </button>
-        </div>
-        <!-- Right Side -->
-                        <div>
-                           <!-- Change Password Checkbox -->
-<div class="mb-4 flex items-center">
-    <label class="w-1/3 font-semibold">Change Password</label>
-    <input type="checkbox" id="changePassword" class="ml-2" onchange="togglePasswordField()">
-</div>
-
-<!-- New Password Field (Initially Hidden) -->
-<div id="passwordField" class="mb-4 flex items-center hidden">
-    <label class="w-1/3 font-semibold">New Password</label>
-    <input type="password" class="w-2/3 p-2 border rounded" placeholder="Enter New Password">
-</div>
-
-<!-- Submit Button (Initially Hidden) -->
-<button id="submitButton" class="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 hidden">
-    Submit
-</button>
-                            <div class="mt-6">
-                                <p class="font-semibold">No. of Projects Subscribed</p>
-                                <input type="text" class="w-1/3 p-2 border rounded " value="" disabled>
-                            </div>
+        <!-- Footer -->
+        <footer th:insert="~{layout/footer :: footer}" class="mt-4"></footer>
     </div>
-<<<<<<< HEAD
-</form>
 
-
-
-    <!-- Image Slider JavaScript -->
-=======
->>>>>>> origin/main
     <script>
-    
-    function previewProfilePhoto(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                document.getElementById("profilePreview").src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-       
-        function togglePasswordField() {
-            const passwordField = document.getElementById("passwordField");
-            const submitButton = document.getElementById("submitButton");
-            const changePassword = document.getElementById("changePassword");
-
-            if (changePassword.checked) {
-                passwordField.classList.remove("hidden");  // Show password field
-                submitButton.classList.remove("hidden");   // Show submit button
-            } else {
-                passwordField.classList.add("hidden");  // Hide password field
-                submitButton.classList.add("hidden");   // Hide submit button
-            }
-        }
-        
-        function toggleDropdown(event, dropdownId) {
-            event.preventDefault();
-            event.stopPropagation();
-
-            // Close all dropdowns except the clicked one
-            document.querySelectorAll("ul.hidden").forEach(menu => {
-                if (menu.id !== dropdownId) {
-                    menu.classList.add("hidden");
-                }
-            });
-
-            // Toggle clicked dropdown
-            document.getElementById(dropdownId).classList.toggle("hidden");
-        }
-
-        // Close dropdowns when clicking outside
-        document.addEventListener("click", function () {
-            document.querySelectorAll("ul.hidden").forEach(menu => menu.classList.add("hidden"));
-        });
-      
-        document.addEventListener("DOMContentLoaded", function () { 
-            const dropdownButton = document.getElementById("dropdownButton");
-            const dropdownMenu = document.getElementById("dropdownMenu");
-
-            dropdownButton.addEventListener("click", function (event) {
-                event.preventDefault();
-                const isExpanded = dropdownMenu.classList.toggle("hidden");
-                dropdownButton.setAttribute("aria-expanded", !isExpanded);
-            });
-
-            document.addEventListener("click", function (event) {
-                if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                    dropdownMenu.classList.add("hidden");
-                    dropdownButton.setAttribute("aria-expanded", "false");
-                }
-            });
-
-            document.addEventListener("keydown", function (event) {
-                if (event.key === "Escape") {
-                    dropdownMenu.classList.add("hidden");
-                    dropdownButton.setAttribute("aria-expanded", "false");
-                }
-            });
-        });
-        
-        //image
         function previewProfilePhoto(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function (e) {
-                    const profilePreview = document.getElementById("profilePreview");
-                    profilePreview.src = e.target.result;
-                    profilePreview.classList.remove("hidden");
-
-                    // Hide the upload text
+                    document.getElementById("profilePreview").src = e.target.result;
+                    document.getElementById("profilePreview").classList.remove("hidden");
                     document.getElementById("uploadText").classList.add("hidden");
                 };
                 reader.readAsDataURL(file);
             }
         }
 
+        function togglePasswordField() {
+            const passwordField = document.getElementById("passwordField");
+            const submitButton = document.getElementById("submitButton");
+            if (document.getElementById("changePassword").checked) {
+                passwordField.classList.remove("hidden");
+                submitButton.classList.remove("hidden");
+            } else {
+                passwordField.classList.add("hidden");
+                submitButton.classList.add("hidden");
+            }
+        }
+        
+        function previewProfilePhoto(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("profilePreview").src = e.target.result;
+                    document.getElementById("profilePreview").classList.remove("hidden");
+                    document.getElementById("uploadText").classList.add("hidden");
+                };
+                reader.readAsDataURL(file);
+            }
+        }
     </script>
-    
-   
 </body>
 </html>

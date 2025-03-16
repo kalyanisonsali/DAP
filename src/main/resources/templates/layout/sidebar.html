@@ -1,56 +1,61 @@
 <div th:fragment="sidebar">
-<<<<<<< HEAD
-   <aside class="bg-gray-700 text-white w-48 h-screen p-4 absolute top-12 left-0">
-        <h2 class="text-lg font-bold mb-3">Menu</h2>
+    <aside class="bg-gray-800 text-white w-48 h-screen p-4 fixed">
+        <h2 class="text-lg font-bold mb-4">Menu</h2>
         <nav>
-            <ul class="bg-gray-700">
-                <li class="mb-2 relative border-b border-gray-500">
-                    <a href="#" class="block p-2 hover:bg-gray-600" onclick="toggleDropdown(event, 'profileDropdown')">
+            <ul>
+                <li class="mb-2 relative border-b border-gray-600">
+                    <a href="#" class="block p-2 hover:bg-gray-700" onclick="toggleDropdown(event, 'profileDropdown')">
                         My Profile
                     </a>
-                    <ul id="profileDropdown" class="w-full  text-white shadow-lg rounded hidden">
+                    <ul id="profileDropdown" class="w-full bg-gray-700 text-white shadow-lg rounded hidden">
                         <li><a href="#" class="block px-4 py-2 hover:bg-blue-500">View Profile</a></li>
                         <li><a href="#" class="block px-4 py-2 hover:bg-blue-700">Edit Profile</a></li>
                     </ul>
                 </li>
-                <li class="mb-2 relative border-b border-gray-500">
-                    <a href="#" class="block p-2 hover:bg-gray-600" onclick="toggleDropdown(event, 'projectDropdown')">
+                <li class="mb-2 relative border-b border-gray-600">
+                    <a href="#" class="block p-2 hover:bg-gray-700" onclick="toggleDropdown(event, 'projectDropdown')">
                         My Project
                     </a>
-                    <ul id="projectDropdown" class="w-full  text-white shadow-lg rounded hidden">
-                        <li><a href="#" class="block px-4 py-2 hover:bg-blue-500 ">Project List</a></li>
+                    <ul id="projectDropdown" class="w-full bg-gray-700 text-white shadow-lg rounded hidden">
+                        <li><a href="#" class="block px-4 py-2 hover:bg-blue-500">Project List</a></li>
                         <li><a href="#" class="block px-4 py-2 hover:bg-blue-500">New Project</a></li>
                     </ul>
                 </li>
-                <li class="mb-2 border-b border-gray-500">
-                    <a href="#" class="block p-2 hover:bg-gray-600">Dashboard</a>
+                <li class="mb-2 border-b border-gray-600">
+                    <a href="#" class="block p-2 hover:bg-gray-700">Dashboard</a>
                 </li>
-                <li class="mb-2 border-b border-gray-500">
-                    <a href="#" class="block p-2 hover:bg-gray-600">Feedback</a>
+                <li class="mb-2 border-b border-gray-600">
+                    <a href="#" class="block p-2 hover:bg-gray-700">Feedback</a>
                 </li>
-                <li class="mt-3">
-                    <a href="#" class="block p-2 bg-red-600 text-white rounded text-center hover:bg-red-700">
+                <li class="mt-4">
+                    <a href="/logout" class="block p-2 bg-red-600 text-white rounded text-center hover:bg-red-700">
                         Logout
                     </a>
                 </li>
             </ul>
         </nav>
     </aside>
-=======
-<aside class="bg-gray-900 text-white w-60 h-screen p-5 fixed">
-    <nav>
-        <ul>
-            <li class="mb-2"><a href="#" class="block p-2 hover:bg-gray-700">My Profile</a></li>
-            <li class="mb-2"><a href="#" class="block p-2 hover:bg-gray-700">My Project</a></li>
-            <li class="mb-2"><a href="#" class="block p-2 hover:bg-gray-700">Dashboard (Insight)</a></li>
-            <li class="mb-2"><a href="#" class="block p-2 hover:bg-gray-700">Feedback</a></li>
-            <li class="mt-4"><a href="/logout"
-                class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700 transition duration-300">
-                Logout
-            </a>
-            </li>
-        </ul>
-    </nav>
-</aside>
->>>>>>> origin/main
+
+    <!-- JavaScript for Dropdown Toggle -->
+    <script>
+        function toggleDropdown(event, dropdownId) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            // Close all dropdowns except the clicked one
+            document.querySelectorAll("ul.hidden").forEach(menu => {
+                if (menu.id !== dropdownId) {
+                    menu.classList.add("hidden");
+                }
+            });
+
+            // Toggle clicked dropdown
+            document.getElementById(dropdownId).classList.toggle("hidden");
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener("click", function () {
+            document.querySelectorAll("ul.hidden").forEach(menu => menu.classList.add("hidden"));
+        });
+    </script>
 </div>
