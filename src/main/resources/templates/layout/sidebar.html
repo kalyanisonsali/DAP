@@ -5,94 +5,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sidebar Navigation</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Remix Icons CDN (Alternative to Font Awesome) -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+
+    <!-- TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
     <div th:fragment="sidebar">
-        <aside class="bg-black text-gray-300 w-60 h-screen p-5 fixed top-14 left-0">
+        <aside class="bg-black text-gray-300 w-60 h-screen p-4 fixed top-16 left-0">
             <nav>
                 <ul>
-                    <!-- My Profile -->
                     <li class="mb-2">
-                        <a th:href="@{/userDash}"
-                            class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
+                        <a th:href="@{/userDash}" class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
                             th:classappend="${currentPage == 'userDash' or currentPage == 'dash' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
-                            <i class="fa-solid fa-user text-teal-500"></i> My Profile
-                        </a>
-                    </li>
-                    
-
-                    <!-- My Project (Dropdown) -->
-                    <li class="mb-2">
-                        <div class="flex items-center justify-between p-2 rounded cursor-pointer w-full"
-                             th:classappend="${currentPage == 'newProject' or currentPage == 'viewProjects' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}"
-                             onclick="toggleDropdown('projectDropdown', 'dropdownIcon')">
-                            <div class="flex items-center gap-3">
-                                <i class="fa-solid fa-folder text-gray-400"></i>
-                                <span>My Project</span>
-                            </div>
-                            <i id="dropdownIcon" class="fa-solid fa-chevron-down text-gray-400"></i>
-                        </div>
-                        <ul id="projectDropdown" class="ml-6 mt-2 hidden">
-                            <li class="mb-2">
-                                <a th:href="@{/create-project}"
-                                    class="block p-2 bg-gray-800 rounded cursor-pointer"
-                                    th:classappend="${currentPage == 'newProject' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
-                                    Create New Project
-                                </a>
-                            </li>
-                            <li>
-                                <a th:href="@{/view-projects}"
-                                    class="block p-2 bg-gray-800 rounded cursor-pointer"
-                                    th:classappend="${currentPage == 'viewProjects' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
-                                    View Existing Projects
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <!-- Dashboard (Insight) -->
-                    <li class="mb-2">
-                        <a th:href="@{/dashboard}"
-                            class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
-                            th:classappend="${currentPage == 'dashboard' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
-                            <i class="fa-solid fa-chart-line text-gray-400"></i> Dashboard (Insight)
+                            <i class="ri-user-fill text-teal-500"></i> My Profile
                         </a>
                     </li>
 
-                    <!-- Feedback -->
                     <li class="mb-2">
-                        <a th:href="@{/feedback}"
-                            class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
+                        <a th:href="@{/company-management}" class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
+                            th:classappend="${currentPage == 'company-management' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
+                            <i class="ri-building-4-line text-gray-400"></i> Company Management
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a th:href="@{/user-management}" class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
+                            th:classappend="${currentPage == 'user-management' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
+                            <i class="ri-user-settings-line text-yellow-400"></i> User Management
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a th:href="@{/template-management}" class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
+                            th:classappend="${currentPage == 'template-management' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
+                            <i class="ri-file-text-line text-gray-400"></i> Template Management
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a th:href="@{/file-management}" class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
+                            th:classappend="${currentPage == 'file-management' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
+                            <i class="ri-folder-line text-gray-400"></i> File Management
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a th:href="@{/analytics}" class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
+                            th:classappend="${currentPage == 'analytics' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
+                            <i class="ri-bar-chart-line text-green-400"></i> Analytics
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a th:href="@{/configuration}" class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
+                            th:classappend="${currentPage == 'configuration' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
+                            <i class="ri-settings-3-line text-gray-400"></i> Configuration
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a th:href="@{/feedback}" class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
                             th:classappend="${currentPage == 'feedback' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
-                            <i class="fa-solid fa-comment text-gray-400"></i> Feedback
+                            <i class="ri-feedback-line text-gray-400"></i> Feedback
                         </a>
                     </li>
 
-                    <!-- Logout -->
                     <li class="mb-2">
-                        <a th:href="@{/logout}"
-                            class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
+                        <a th:href="@{/logout}" class="flex items-center gap-3 p-2 rounded cursor-pointer w-full"
                             th:classappend="${currentPage == 'logout' ? 'bg-gray-700 text-white font-bold' : 'hover:bg-gray-600'}">
-                            <i class="fa-solid fa-right-from-bracket text-gray-400"></i> Logout
+                            <i class="ri-logout-circle-line text-blue-400"></i> Logout
                         </a>
                     </li>
                 </ul>
             </nav>
         </aside>
     </div>
-
-    <script>
-        function toggleDropdown(dropdownId, iconId) {
-            let dropdown = document.getElementById(dropdownId);
-            let icon = document.getElementById(iconId);
-
-            dropdown.classList.toggle("hidden");
-            icon.classList.toggle("rotate-180");
-        }
-    </script>
 
     <style>
         .rotate-180 {

@@ -125,14 +125,6 @@
             let email = document.getElementById('email').value.trim();
             let password = document.getElementById('password').value.trim();
 
-            // const emailError = document.getElementById('emailError');
-            // const passwordError = document.getElementById('passwordError');
-
-            // emailError.textContent = "";
-            // passwordError.textContent = "";
-            // emailError.classList.add('hidden');
-            // passwordError.classList.add('hidden');
-
             email = email.toLowerCase();
             document.getElementById('email').value = email;
 
@@ -168,7 +160,7 @@
                     });
 
                     setTimeout(() => {
-                        window.location.href = "/userDash"; // Redirect on success
+                        window.location.href = "/userDash"; 
                     }, 1500);
                 } else {
                     Swal.fire({

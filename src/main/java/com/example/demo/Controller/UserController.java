@@ -1,6 +1,5 @@
 package com.example.demo.Controller;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,17 +53,6 @@ public class UserController {
 		return "signup";
 	}
 
-//	@GetMapping("/dash")
-//	public String dashboard(Model model, Principal principal) {
-//		model.addAttribute("currentPage", "dashboard");
-//
-//		if (principal != null) {
-//			model.addAttribute("username", principal.getName());
-//		}
-//
-//		return "dashboard"; // Thymeleaf template
-//	}
-
 	@GetMapping("/create-project")
 	public String createProject(Model model) {
 		model.addAttribute("currentPage", "newProject");
@@ -77,23 +65,17 @@ public class UserController {
 		return "viewProjects";
 	}
 
-//	@GetMapping("/dashboard")
-//	public String dashboard(Model model) {
-//		model.addAttribute("currentPage", "dashboard");
-//		return "dashboard";
-//	}
-
 	@GetMapping("/feedback")
 	public String feedbackPage(HttpSession session, Model model) {
-	    User user = (User) session.getAttribute("loggedInUser");
+		User user = (User) session.getAttribute("loggedInUser");
 
-	    if (user != null) {
-	        model.addAttribute("fname", user.getFname());
-	    } else {
-	        model.addAttribute("fname", "Guest"); // Default value if user is not found
-	    }
-	    model.addAttribute("currentPage", "feedback");
-	    return "feedback";
+		if (user != null) {
+			model.addAttribute("fname", user.getFname());
+		} else {
+			model.addAttribute("fname", "Guest");
+		}
+		model.addAttribute("currentPage", "feedback");
+		return "feedback";
 	}
 
 	@GetMapping("/logout")
