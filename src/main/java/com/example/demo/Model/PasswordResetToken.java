@@ -1,5 +1,6 @@
 package com.example.demo.Model;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -22,6 +23,9 @@ public class PasswordResetToken {
 	private User user;
 
 	private LocalDateTime expiryDate;
+	
+	private String email;
+	
 
 	public boolean isExpired() {
 		return expiryDate.isBefore(LocalDateTime.now());
@@ -29,6 +33,14 @@ public class PasswordResetToken {
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public void setId(Long id) {
@@ -58,5 +70,12 @@ public class PasswordResetToken {
 	public void setExpiryDate(LocalDateTime expiryDate) {
 		this.expiryDate = expiryDate;
 	}
+
+	public void setExpiryDate(Timestamp timestamp) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 }

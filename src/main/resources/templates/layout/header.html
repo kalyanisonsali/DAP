@@ -1,25 +1,36 @@
-<header class="bg-teal-600 text-white p-2 flex justify-between items-center shadow-md text-base fixed top-0 left-0 w-full z-50">
-    <div class="ml-2">
-        <img th:src="@{/images/in2in_logo.png}" alt="Logo" class="w-20 h-18 ml-16" style="filter: invert(1) brightness(1000%);">
+
+<header th:fragment="header" class="bg-teal-600 text-white p-3 flex justify-between items-center shadow-md fixed top-0 left-0 w-full z-40">
+    <div class="flex items-center">
+        <!-- Hamburger Button -->
+        
+        <!-- Logo -->
+        <img th:src="@{/images/in2in_logo.png}" alt="Logo" class="w-20 h-18 ml-2 sm:ml-16" style="filter: invert(1) brightness(1000%);">
+ <button id="hamburger" class=" p-2 bg-gray-700 text-white rounded">☰</button>
+        
     </div>
     
+    <!-- Subscription Button -->
+    <button class="bg-orange-500 text-white px-4 py-2 text-sm rounded-md flex items-center hover:bg-orange-600 transition duration-300">
+        Subscribe Basic Plan ($50) <span class="ml-1">➤</span>
+    </button>
+
+    <!-- Profile Dropdown -->
     <div class="relative flex items-center space-x-2 mr-4 cursor-pointer">
-        <svg class="w-10 h-10 rounded-full border border-white bg-gray-300 p-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="8" r="4" stroke="white" stroke-width="2"/>
-            <path d="M4 20c0-4 4-6 8-6s8 2 8 6" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+                <img id="headerProfilePic" class="w-10 h-10 rounded-full border border-white" th:src="@{${profileImage}}" alt="Profile">
+        <img th:unless="${picture}" src="https://ui-avatars.com/api/?name=User" class="w-10 h-10 rounded-full border border-white" alt="Default Avatar">
 
         <div class="text-white">
             <p class="text-xs leading-none font-medium">WELCOME</p>
             <span th:text="${fname}" class="font-bold"></span>
         </div>
-        <button id="dropdownButton" class="ml-1 focus:outline-none">
-            ▼
-        </button>
 
-        <div id="dropdownMenu" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden">
-            <a href="/profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Profile</a>
-            <a href="/logout" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Logout</a>
+        <!-- Dropdown Button -->
+        <button id="dropdownButton" class="ml-1 focus:outline-none">▼</button>
+
+        <!-- Dropdown Menu -->
+        <div id="dropdownMenu" class="absolute right-0 top-full mt-1 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-50 hidden">
+            <a href="/profile" class="block px-3 py-2 text-gray-700 hover:bg-gray-100">My Profile</a>
+            <a href="/logout" class="block px-3 py-2 text-gray-700 hover:bg-gray-100">Logout</a>
         </div>
     </div>
 </header>
