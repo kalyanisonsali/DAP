@@ -13,92 +13,88 @@
     <div class="flex flex-col min-h-screen">
         <!-- Header -->
         <header th:insert="~{layout/header :: header}" class="shadow-md"></header>
+<br>
 
         <!-- Main Container -->
+        <h1>My Profile</h1>
         <div class="flex flex-1 min-h-screen mt-4">
             <!-- Sidebar -->
             <aside class="w-56 bg-white shadow-lg flex flex-col min-h-screen" th:insert="~{layout/sidebar :: sidebar}"></aside>
+<!-- Main Content -->
+<main class="flex-1 p-5 bg-gray-100">
+    <h1 class="text-2xl font-bold mb-4 text-teal-700">MY PROFILE</h1>
 
-            <!-- Main Content -->
-            <main class="flex-1 p-5 bg-gray-100">
-                <h1 class="text-2xl font-bold mb-4 text-teal-700">MY PROFILE</h1>
-                <form class="mt-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Left Side -->
-                        <div>
-                            <!-- Profile Photo Upload -->
-                            <div class="mb-4 flex items-center">
-                                <label class="w-1/3 font-semibold">Profile Photo</label>
-                                <div class="w-20 h-20 border border-gray-300 rounded-md overflow-hidden flex items-center justify-center cursor-pointer bg-gray-200"
-                                     onclick="document.getElementById('profilePhoto').click()">
-                                    <img id="profilePreview" class="w-full h-full object-cover"
-                                         th:src="@{/profileImage/{userId}(userId=${user.id})}" 
-                                         onerror="this.src='/images/default-profile.png'">
-                                    <span id="uploadText" class="text-gray-500 text-sm hidden">Upload Photo</span>
-                                </div>
-                                <input type="file" id="profilePhoto" name="image" class="hidden" accept="image/*" onchange="previewProfilePhoto(event)">
-                            </div>
+    <!-- Form to Update Profile -->
+<!-- Form to Update Profile -->
+<form id="updateProfileForm" action="/update-profile" method="post" enctype="multipart/form-data" class="mt-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Left Side -->
+            <div>
+                <!-- Profile Photo Upload -->
+                <label class="w-1/3 font-semibold">Profile Photo</label>
+    <div class="w-20 h-20 border border-gray-300 rounded-md overflow-hidden flex items-center justify-center cursor-pointer bg-gray-200"
+         onclick="document.getElementById('profilePhoto').click()">
+        <img id="profilePreview" th:src="@{${profileImage}}" alt="Profile Photo" class="w-20 h-20 object-cover">
+    </div>
+    <input type="file" id="profilePhoto" name="image" class="hidden" accept="image/*">
+                <div class="mb-4 flex items-center">
+                    <label class="w-1/3 font-semibold">First Name</label>
+                    <input type="text" class="w-2/3 p-2 border rounded" name="fname" th:value="${fname}">
+                </div>
 
-                            
+                <div class="mb-4 flex items-center">
+                    <label class="w-1/3 font-semibold">Last Name</label>
+                    <input type="text" class="w-2/3 p-2 border rounded" name="lname" th:value="${lname}">
+                </div>
 
-                            <div class="mb-4 flex items-center">
-                                <label class="w-1/3 font-semibold">First Name</label>
-                                <input type="text" class="w-2/3 p-2 border rounded" th:value="${fname}">
-                            </div>
+                <div class="mb-4 flex items-center">
+                    <label class="w-1/3 font-semibold">Email ID</label>
+                    <input type="email" class="w-2/3 p-2 border rounded bg-gray-100" name="email" th:value="${email}" readonly>
+                </div>
 
-                            <div class="mb-4 flex items-center">
-                                <label class="w-1/3 font-semibold">Last Name</label>
-                                <input type="text" class="w-2/3 p-2 border rounded" th:value="${lname}">
-                            </div>
+                <div class="mb-4 flex items-center">
+                    <label class="w-1/3 font-semibold">Last Login</label>
+                    <input type="text" class="w-2/3 p-2 border rounded bg-gray-100" th:value="${lastLogin}" readonly>
+                </div>
 
-                            <div class="mb-4 flex items-center">
-                                <label class="w-1/3 font-semibold">Email ID</label>
-                                <input type="email" class="w-2/3 p-2 border rounded bg-gray-100" th:value="${email}" readonly>
-                            </div>
+                <div class="mb-4 flex items-center">
+                    <label class="w-1/3 font-semibold">Subscription</label>
+                    <input type="text" class="w-2/3 p-2 border rounded bg-gray-100" th:value="${subscription}" readonly>
+                </div>
+            </div>
 
-                            <div class="mb-4 flex items-center">
-                                <label class="w-1/3 font-semibold">Last Login</label>
-                                <input type="text" class="w-2/3 p-2 border rounded bg-gray-100" th:value="${lastLogin}" readonly>
-                            </div>
+            <!-- Right Side -->
+            <div>
+                <div class="mb-4 flex items-center">
+                    <label class="w-1/3 font-semibold">Change Password</label>
+                    <input type="checkbox" id="changePassword" class="ml-2" onchange="togglePasswordField()">
+                </div>
 
-                            <div class="mb-4 flex items-center">
-                                <label class="w-1/3 font-semibold">Subscription</label>
-                                <input type="text" class="w-2/3 p-2 border rounded bg-gray-100" th:value="${subscription}" readonly>
-                            </div>
-                        </div>
+                <div id="passwordField" class="mb-4 flex items-center hidden">
+                    <label class="w-1/3 font-semibold">New Password</label>
+                    <input type="password" class="w-2/3 p-2 border rounded" name="newPassword" placeholder="Enter New Password">
+                </div>
 
-                        <!-- Right Side -->
-                        <div>
-                            <div class="mb-4 flex items-center">
-                                <label class="w-1/3 font-semibold">Change Password</label>
-                                <input type="checkbox" id="changePassword" class="ml-2" onchange="togglePasswordField()">
-                            </div>
+                <div class="mb-4 flex items-center">
+                    <label class="w-1/3 font-semibold">No. of Projects</label>
+                    <input type="text" class="w-2/3 p-2 border rounded bg-gray-100" th:value="${projectSubscribed}" readonly>
+                </div>
 
-                            <div id="passwordField" class="mb-4 flex items-center hidden">
-                                <label class="w-1/3 font-semibold">New Password</label>
-                                <input type="password" class="w-2/3 p-2 border rounded" placeholder="Enter New Password">
-                            </div>
+                <div class="mb-4">
+                    <p class="text-gray-700">
+                        <strong>Created :</strong> <span th:text="${created}"></span>, 
+                        <strong>Active :</strong> <span th:text="${active}"></span>, 
+                        <strong>Deleted :</strong> <span th:text="${deleted}"></span>
+                    </p>
+                </div>
 
-                            <div class="mb-4 flex items-center">
-                                <label class="w-1/3 font-semibold">No. of Projects</label>
-                                <input type="text" class="w-2/3 p-2 border rounded bg-gray-100" th:value="${projectSubscribed}" readonly>
-                            </div>
+<button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update Profile</button>
 
-                            <div class="mb-4">
-                                <p class="text-gray-700">
-                                    <strong>Created :</strong> <span th:text="${created}"></span>, 
-                                    <strong>Active :</strong> <span th:text="${active}"></span>, 
-                                    <strong>Deleted :</strong> <span th:text="${deleted}"></span>
-                                </p>
-                            </div>
-
-                            <button id="submitButton" class="mt-4 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 hidden">Submit</button>
-                        </div>
-                    </div>
-
-                    <button class="mt-6 px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700">Save</button>
-                </form>
-            </main>
+            </div>
+        </div>
+    </form>
+</main>
+            
         </div>
 
         <!-- Footer -->
@@ -106,43 +102,77 @@
     </div>
 
     <script>
-        function previewProfilePhoto(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById("profilePreview").src = e.target.result;
-                    document.getElementById("profilePreview").classList.remove("hidden");
-                    document.getElementById("uploadText").classList.add("hidden");
-                };
-                reader.readAsDataURL(file);
-            }
+    function previewProfilePhoto(event) {
+        let file = event.target.files[0]; 
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                let imgElement = document.getElementById("profilePreview");
+                if (imgElement) {
+                    imgElement.src = e.target.result;
+                }
+            };
+            reader.readAsDataURL(file);
         }
+    }
 
-        function togglePasswordField() {
-            const passwordField = document.getElementById("passwordField");
-            const submitButton = document.getElementById("submitButton");
-            if (document.getElementById("changePassword").checked) {
-                passwordField.classList.remove("hidden");
-                submitButton.classList.remove("hidden");
-            } else {
-                passwordField.classList.add("hidden");
-                submitButton.classList.add("hidden");
-            }
+    function togglePasswordField() {
+        const passwordField = document.getElementById("passwordField");
+        if (document.getElementById("changePassword").checked) {
+            passwordField.classList.remove("hidden");
+        } else {
+            passwordField.classList.add("hidden");
         }
-        
-        function previewProfilePhoto(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById("profilePreview").src = e.target.result;
-                    document.getElementById("profilePreview").classList.remove("hidden");
-                    document.getElementById("uploadText").classList.add("hidden");
-                };
-                reader.readAsDataURL(file);
-            }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        let profilePhotoInput = document.getElementById("profilePhoto");
+        if (profilePhotoInput) {
+            profilePhotoInput.addEventListener("change", previewProfilePhoto);
         }
-    </script>
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("updateProfileForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent default page reload
+
+            let formData = new FormData(this); // Get form data
+
+            fetch("/update-profile", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    // Update Name in Header
+                    document.getElementById("headerUserName").innerText = data.fname + " " + data.lname;
+
+                    // Update Profile Image in Header
+                    let headerImg = document.getElementById("headerProfilePic");
+                    if (headerImg) {
+                        headerImg.src = data.profileImage + "?t=" + new Date().getTime(); // Prevent caching
+                    }
+
+                    alert("Profile updated successfully!");
+                } else {
+                    alert("Error: " + data.message);
+                }
+            })
+            .catch(error => console.error("Error updating profile:", error));
+        });
+    });
+    fetch("/get-profile")
+    .then(response => response.json())
+    .then(data => {
+        if (data.fname) {
+            document.getElementById("headerUserName").innerText = data.fname + " " + data.lname;
+        }
+        if (data.picture) {
+            document.getElementById("headerProfilePic").src = data.picture + "?t=" + new Date().getTime();
+        }
+    })
+    .catch(error => console.log("Error fetching profile data:", error));
+</script>
 </body>
 </html>

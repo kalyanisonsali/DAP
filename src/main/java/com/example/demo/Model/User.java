@@ -41,20 +41,21 @@ public class User {
     private int active;
     private int deleted;
 
+    private String company;
     @Column(name = "last_login", columnDefinition = "TIMESTAMP")
     private LocalDateTime lastLogin;
     
     @Lob // Store as Large Object
     @Column(columnDefinition = "LONGBLOB") // For MySQL (or use BYTEA for PostgreSQL)
-    private byte[] profileImage;
+    private String profileImage;
 
     // Getters and Setters
-    public byte[] getProfileImage() {
+    public String getProfileImage() {
         return profileImage;
     }
 
-    public void setProfileImage(byte[] profileImage) {
-        this.profileImage = profileImage;
+    public void setProfileImage(String fileName) {
+        this.profileImage = fileName;
     }
 	public Long getId() {
 		return id;
@@ -62,6 +63,14 @@ public class User {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
 	public String getFname() {
