@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+    <div class="flex flex-col min-h-screen">
+        <header class="fixed top-0 left-0 w-full z-50" th:insert="~{layout/header :: header}"></header>
+
+        <div class="flex flex-1 pt-16">
+            <aside class="w-60 bg-white shadow-lg fixed top-14 left-0 h-full z-40"
+                th:insert="~{layout/sidebar :: sidebar}"></aside>
+
+            <main class="flex-1 p-10 ml-60">
+                <h2 class="text-2xl font-bold text-teal-700 mb-4 text-center">COMPANY MANAGEMENT</h2>
+
+                <div class="bg-white p-4 rounded-md shadow-md w-2/3 mx-auto mt-6">
+                    <div class="p-4 rounded-md shadow-sm">
+                        <form th:action="@{/company-management/save-company}" method="post" th:object="${company}" class="space-y-2 w-full">
+                            <div class="flex items-center">
+                                <label for="companyName" class="font-semibold mr-2 whitespace-nowrap">Company Name <span class="text-red-500">*</span></label>
+                                <input type="text" id="companyName" name="name" th:field="*{name}" required class="border p-1 rounded-md text-sm w-full">
+                            </div>
+                
+                            <div class="flex items-center mt-2">
+                                <label for="lob" class="font-semibold mr-2">LOB</label>
+                                <select id="lob" name="lob" th:field="*{lob}" required class="border p-1 rounded-md text-sm w-full">
+                                    <option value="">--Select a LOB--</option>
+                                    <option th:each="lob : ${lobList}" th:value="${lob}" th:text="${lob}"></option>
+                                </select>
+                            </div>
+                
+                            <div class="mt-2 flex justify-center space-x-2">
+                                <button type="submit" class="bg-blue-500 text-white px-4 py-1 rounded-md text-sm hover:bg-blue-600">Save</button>
+                                <button type="reset" class="bg-blue-500 text-white px-4 py-1 rounded-md text-sm hover:bg-blue-600">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+    
+                    <div class="mt-6">
+                        <h3 class="text-lg font-semibold text-teal-700 mb-2 text-center">Company List</h3>
+                
+                        <table class="w-full border border-gray-300 text-sm text-center">
+                            <thead>
+                                <tr class="bg-blue-300 text-white">
+                                    <th class="border border-gray-300 p-2">Company Name</th>
+                                    <th class="border border-gray-300 p-2">LOB</th>
+                                    <th class="border border-gray-300 p-2">Edit</th>
+                                    <th class="border border-gray-300 p-2">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="company : ${companies}" class="bg-white hover:bg-gray-100">
+                                    <td class="border border-gray-300 p-2" th:text="${company.name}"></td>
+                                    <td class="border border-gray-300 p-2">
+                                        <a th:href="@{'/companies/lob/' + ${company.lob}}" class="text-blue-500 hover:underline" th:text="${company.lob}"></a>
+                                    </td>
+                                    <td class="border border-gray-300 p-2">
+                                        <a th:href="@{/company-management/edit/{id}(id=${company.id})}" class="text-gray-700 text-lg">✎</a>
+                                    </td>
+                                    <td class="border border-gray-300 p-2">
+                                        <a th:href="@{/company-management/delete/{id}(id=${company.id})}" onclick="return confirm('Are you sure?')" class="text-red-500 text-lg">🗑️</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>

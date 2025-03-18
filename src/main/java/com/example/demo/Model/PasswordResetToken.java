@@ -27,7 +27,6 @@ public class PasswordResetToken {
 	private String email;
 	
 
-	// Getters and Setters
 	public boolean isExpired() {
 		return expiryDate.isBefore(LocalDateTime.now());
 	}
