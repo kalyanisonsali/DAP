@@ -19,4 +19,9 @@ public class DashboardController {
 		}
 		return "userDash";
 	}
+	@GetMapping("/profile")
+	public String profile()
+	{
+		return "admin_dash";
+	}
 }

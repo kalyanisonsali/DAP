@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+
+    <!-- Profile Container -->
+    <section class="bg-white p-6 rounded-lg shadow-lg w-3/4 flex items-start space-x-8">
+        
+        <!-- Profile Picture -->
+        <div class="flex flex-col items-center">
+            <div id="imagePreview" class="w-32 h-32 border border-gray-300 rounded-full overflow-hidden flex items-center justify-center bg-gray-100">
+                <span class="text-gray-500 text-sm">No Image</span>
+            </div>
+            <input type="file" id="uploadImage" class="hidden" accept="image/*">
+            <button id="uploadButton" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">Upload Photo</button>
+        </div>
+
+        <!-- Profile Details -->
+        <form class="w-2/3 space-y-4">
+            <div class="flex items-center space-x-4">
+                <label class="w-1/4 font-semibold">User Name</label>
+                <input type="text" value="In2InGlobal Admin" class="w-3/4 border p-2 rounded-lg bg-gray-100" readonly>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <label class="w-1/4 font-semibold">Company Name</label>
+                <input type="text" value="In2In Global" class="w-3/4 border p-2 rounded-lg bg-gray-100" readonly>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <label class="w-1/4 font-semibold">Email Id</label>
+                <input type="email" value="ganesh@gmail.com" class="w-3/4 border p-2 rounded-lg bg-gray-100" readonly>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <label class="w-1/4 font-semibold">Activity Access</label>
+                <input type="text" value="All" class="w-3/4 border p-2 rounded-lg bg-gray-100" readonly>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <label class="w-1/4 font-semibold">Role</label>
+                <input type="text" value="Admin" class="w-3/4 border p-2 rounded-lg bg-gray-100" readonly>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <label class="w-1/4 font-semibold">Status</label>
+                <input type="text" value="Active" class="w-3/4 border p-2 rounded-lg bg-gray-100" readonly>
+            </div>
+        </form>
+
+    </section>
+
+    <!-- JavaScript for Upload Functionality -->
+    <script>
+        document.getElementById("uploadButton").addEventListener("click", function () {
+            document.getElementById("uploadImage").click();
+        });
+
+        document.getElementById("uploadImage").addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("imagePreview").innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+                    document.getElementById("uploadButton").disabled = true;
+                    document.getElementById("uploadButton").classList.add("opacity-50", "cursor-not-allowed");
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+</body>
+</html>

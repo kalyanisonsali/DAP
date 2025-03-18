@@ -124,6 +124,7 @@ public class UserController {
         model.addAttribute("fname", user.getFname());
         model.addAttribute("lname", user.getLname());
         model.addAttribute("email", user.getEmail());
+        model.addAttribute("company", user.getCompany());
         model.addAttribute("currentPage", "userDash");
         model.addAttribute("picture", user.getProfileImage()); // Ensure this returns a valid URL
 
