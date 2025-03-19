@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    <script> tailwind.config = { theme: { extend: {} } };</script>
+
+    <!-- SweetAlert for alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="bg-gray-100">
+    <div class="flex flex-col min-h-screen">
+        <!-- Header -->
+        <header th:insert="~{layout/header :: header}" class="shadow-md"></header>
+
+        <!-- Page Title -->
+        <div class="w-full mt-6">
+            <h1 class="text-center text-2xl font-bold text-teal-700">MY PROFILE</h1>
+        </div>
+
+        <div class="flex flex-1 mt-4">
+            <!-- Sidebar -->
+            <aside class="w-56 bg-white shadow-lg flex flex-col" th:insert="~{layout/sidebar :: sidebar}"></aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 p-6 bg-white rounded-lg shadow-lg">
+                <!-- Navigation Tabs -->
+                <div class="flex space-x-6 border-b-2">
+                    <button id="uploadTab" class="text-blue-500 font-semibold border-b-2 border-blue-500 pb-1 focus:outline-none">
+                        Upload Master Template
+                    </button>
+                    <button id="createTab" class="text-gray-500 font-semibold hover:text-blue-500 pb-1 focus:outline-none">
+                        Create Template
+                    </button>
+                </div>
+
+                <!-- Upload Section -->
+                <div id="uploadSection" class="bg-white p-6 rounded-md shadow-md mt-6">
+                    <div class="flex items-center space-x-4">
+                        <label for="fileInput" class="font-semibold">Template Files:</label>
+                        <input type="file" id="fileInput" class="border p-2 rounded-md">
+                        <button onclick="uploadFile()" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                            Upload
+                        </button>
+                    </div>
+
+                    <div class="mt-4 p-4 bg-gray-100 border-l-4 border-blue-500">
+                        <h2 class="text-blue-700 font-semibold">Instruction for Upload Master Template:</h2>
+                        <ul class="text-red-500 mt-2 text-sm list-disc pl-6">
+                            <li>Template file name should be descriptive and meaningful without spaces.</li>
+                            <li>Template header name should not have spaces.</li>
+                            <li>Template header name should not contain special characters.</li>
+                            <li>Template file should have only header information & no additional records.</li>
+                        </ul>
+                    </div>
+                </div>
+
+<!-- Create Template Section -->
+<div id="createSection" class="mt-6 hidden">
+    <form th:action="@{/saveTemplate}" th:object="${template}" method="post" class="mt-6">
+    <div class="grid grid-cols-2 gap-6">
+        <!-- Template Name Dropdown -->
+        <div class="flex items-center space-x-4">
+            <label class="font-semibold w-40">Template Name <span class="text-red-500">*</span></label>
+            <select th:field="*{template_name}" class="flex-1 p-2 border rounded-md">
+                <option value="">-- Select a Template --</option>
+                <option value="Template 1">Template 1</option>
+                <option value="Template 2">Template 2</option>
+            </select>
+        </div>
+
+        <!-- Instruction TextArea -->
+        <div class="flex items-center space-x-4">
+            <label class="font-semibold w-40">Instruction <span class="text-red-500">*</span></label>
+            <textarea th:field="*{instruction}" class="flex-1 p-2 border rounded-md h-24" placeholder="Enter Instructions"></textarea>
+        </div>
+
+        <!-- Created By (Auto-filled) -->
+        <div class="flex items-center space-x-4">
+            <label class="font-semibold w-40">Created By <span class="text-red-500">*</span></label>
+<input type="email" th:field="*{created_by}" class="flex-1 p-2 border rounded-md bg-gray-200" readonly>
+        </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="mt-4 flex space-x-4">
+        <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+            Create
+        </button>
+        <button type="reset" class="px-6 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500">
+            Cancel
+        </button>
+    </div>
+</form>
+
+<!-- Table (Only for Create Template Tab) -->
+<div class="mt-6">
+    <table class="w-full border text-center">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="p-2">Template Name</th>
+                <th class="p-2">Created By</th>
+                <th class="p-2">Instructions</th>
+            </tr>
+        </thead>
+        <tbody>
+    <tr th:each="t : ${templates}">
+        <td class="p-2" th:text="${t.template_name}"></td>
+        <td class="p-2" th:text="${t.created_by}"></td>
+        <td class="p-2" th:text="${t.instruction}"></td>
+    </tr>
+</tbody>
+
+    </table>
+</div>
+
+
+    <script>
+        function uploadFile() {
+            let fileInput = document.getElementById("fileInput");
+
+            if (!fileInput.files.length) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'No File Selected',
+                    text: 'Please choose a file before uploading.',
+                    width: '300px'
+                });
+                return;
+            }
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Upload Successful',
+                text: 'Your template has been uploaded!',
+                width: '300px'
+            });
+        }
+
+     // Tab Switching Logic
+        document.getElementById("uploadTab").addEventListener("click", function () {
+            document.getElementById("uploadSection").classList.remove("hidden");
+            document.getElementById("createSection").classList.add("hidden");
+
+            // Update tab styling
+            this.classList.add("text-blue-500", "border-b-2", "border-blue-500");
+            document.getElementById("createTab").classList.remove("text-blue-500", "border-b-2", "border-blue-500");
+            document.getElementById("createTab").classList.add("text-gray-500");
+        });
+
+        document.getElementById("createTab").addEventListener("click", function () {
+            document.getElementById("uploadSection").classList.add("hidden");
+            document.getElementById("createSection").classList.remove("hidden");
+
+            // Update tab styling
+            this.classList.add("text-blue-500", "border-b-2", "border-blue-500");
+            document.getElementById("uploadTab").classList.remove("text-blue-500", "border-b-2", "border-blue-500");
+            document.getElementById("uploadTab").classList.add("text-gray-500");
+        });
+        
+    </script>
+</body>
+</html>

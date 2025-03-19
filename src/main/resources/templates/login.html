@@ -6,7 +6,7 @@
     <title>Login Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Added SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
 </head>
 <body class="flex items-center justify-center min-h-screen bg-gray-200">
    <div class="bg-white p-8 rounded-lg shadow-lg flex w-[800px]">
@@ -61,7 +61,9 @@
                 title: "Invalid Email!",
                 text: "Please enter a valid email address with abc@gmail.com.",
                 icon: "warning",
-                confirmButtonColor: "#d33"
+                confirmButtonColor: "#d33",
+                	width: '200px', 
+                    height: '50px',
             });
             return;
         }
@@ -71,7 +73,9 @@
                 title: "Weak Password!",
                 text: "Password must be at least 6 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.",
                 icon: "warning",
-                confirmButtonColor: "#d33"
+                confirmButtonColor: "#d33",
+                width: '200px', 
+                height: '50px',
             });
             return;
         }
